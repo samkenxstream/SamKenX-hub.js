@@ -1,6 +1,19 @@
-name: Node CI
+name: Hub - Test
+on:
+  push:
+    paths:
+      - ".github/workflows/hub-test.yml"
+      - "packages/hub/**"
+    branches:
+      - main
+  pull_request:
+    paths:
+      - ".github/workflows/hub-test.yml"
+      - "packages/hub/**"
 
-on: [push]
+defaults:
+  run:
+    working-directory: packages/hub
 
 jobs:
   test:
@@ -16,5 +29,6 @@ jobs:
         with:
           node-version: "18"
           cache: "pnpm"
+          cache-dependency-path: "packages/hub/pnpm-lock.yaml"
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
